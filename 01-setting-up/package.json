@@ -4,11 +4,19 @@
   "description": "First you'll need [Node.js](https://nodejs.org) and the package manager\r that comes with it: [npm](https://www.npmjs.com/).",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --hot --inline"
+    "start":"if-env NDOE_ENV=production && npm run start:prod || npm run start:dev",
+    "start:dev": "webpack-dev-server --hot --inline --content-base public --history-api-fallback",
+    "start:prod":"webpack && node server.js",
+    "build:client": "webpack",
+    "build:server": "webpack --config webpack.server.config.js",
+    "build": "npm run build:client && npm run build:server"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "compression": "^1.6.2",
+    "express": "^4.13.4",
+    "if-env": "^1.0.0",
     "react": "^15.1.0",
     "react-dom": "^15.1.0",
     "react-router": "^2.4.1"
